@@ -42,4 +42,4 @@ Les tests avec traitement par lot (batch) seront effectués plus tard.
 
 Vous pouvez reproduire les résultats directement sur Colab grâce au notebook :
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ton-utilisateur/ton-repo/blob/main/scripts/test_openvino.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1j0snnm5yODPL46u_R_xRiJvtBp5OCKWU?usp=sharing)
