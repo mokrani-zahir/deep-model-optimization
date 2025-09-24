@@ -1,0 +1,9 @@
+onnx
+onnxruntime
+openvino
+torch
+torchvision
+opencv-python
+scikit-image
+scipy
+onnxslim

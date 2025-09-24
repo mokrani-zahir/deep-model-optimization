@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+*.onnx
+*.xml
+*.bin
+*.pth
+
+resulta/openvino/
+resulta/onnx/
+resulta/pytorch/
+
+*.log
+*.tmp
+*.swp
