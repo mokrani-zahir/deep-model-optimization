@@ -4,14 +4,11 @@ import torch.nn as nn
 import torch.nn.init as init
 from torchvision import models
 
-# Fix pour les versions récentes de torchvision
 try:
-    from torchvision.models.vgg import model_urls
+    from torchvision.models import VGG16_BN_Weights
 except ImportError:
-    # Pour torchvision >= 0.14.0
-    model_urls = {
-        'vgg16_bn': 'https://download.pytorch.org/models/vgg16_bn-6c64b313.pth',
-    }
+    VGG16_BN_Weights = None
+
 
 def init_weights(modules):
     for m in modules:
@@ -26,29 +23,27 @@ def init_weights(modules):
             m.weight.data.normal_(0, 0.01)
             m.bias.data.zero_()
 
+
 class vgg16_bn(torch.nn.Module):
     def __init__(self, pretrained=True, freeze=True):
         super(vgg16_bn, self).__init__()
-        
-        # Gestion des versions récentes de torchvision
+
         if pretrained:
             try:
-                # Méthode moderne (torchvision >= 0.14.0)
-                vgg_pretrained_features = models.vgg16_bn(weights='VGG16_BN_Weights.IMAGENET1K_V1').features
-            except (TypeError, AttributeError):
-                # Méthode ancienne (torchvision < 0.14.0)
-                if 'model_urls' in globals():
-                    model_urls['vgg16_bn'] = model_urls['vgg16_bn'].replace('https://', 'http://')
-                vgg_pretrained_features = models.vgg16_bn(pretrained=pretrained).features
+                vgg_pretrained_features = models.vgg16_bn(
+                    weights=VGG16_BN_Weights.IMAGENET1K_V1
+                ).features
+            except Exception:
+                vgg_pretrained_features = models.vgg16_bn(pretrained=True).features
         else:
-            vgg_pretrained_features = models.vgg16_bn(pretrained=False).features
-        
+            vgg_pretrained_features = models.vgg16_bn(weights=None).features
+
         self.slice1 = torch.nn.Sequential()
         self.slice2 = torch.nn.Sequential()
         self.slice3 = torch.nn.Sequential()
         self.slice4 = torch.nn.Sequential()
         self.slice5 = torch.nn.Sequential()
-        
+
         for x in range(12):         # conv2_2
             self.slice1.add_module(str(x), vgg_pretrained_features[x])
         for x in range(12, 19):     # conv3_3
@@ -60,9 +55,9 @@ class vgg16_bn(torch.nn.Module):
 
         # fc6, fc7 without atrous conv
         self.slice5 = torch.nn.Sequential(
-                nn.MaxPool2d(kernel_size=3, stride=1, padding=1),
-                nn.Conv2d(512, 1024, kernel_size=3, padding=6, dilation=6),
-                nn.Conv2d(1024, 1024, kernel_size=1)
+            nn.MaxPool2d(kernel_size=3, stride=1, padding=1),
+            nn.Conv2d(512, 1024, kernel_size=3, padding=6, dilation=6),
+            nn.Conv2d(1024, 1024, kernel_size=1)
         )
 
         if not pretrained:
@@ -71,11 +66,11 @@ class vgg16_bn(torch.nn.Module):
             init_weights(self.slice3.modules())
             init_weights(self.slice4.modules())
 
-        init_weights(self.slice5.modules())        # no pretrained model for fc6 and fc7
+        init_weights(self.slice5.modules())  # no pretrained model for fc6 and fc7
 
         if freeze:
-            for param in self.slice1.parameters():      # only first conv
-                param.requires_grad= False
+            for param in self.slice1.parameters():  # only first conv
+                param.requires_grad = False
 
     def forward(self, X):
         h = self.slice1(X)
