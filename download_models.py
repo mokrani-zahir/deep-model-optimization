@@ -6,7 +6,7 @@ DEFAULT_MODELS_DIR = "./models"
 
 MODEL_URLS = {
     "craft_pytorch": "https://huggingface.co/zahir-mokrani/ocr_detect_text/resolve/main/craft_mlt_25k.pth",
-    "craft_onnx": "https://huggingface.co/<user>/<repo>/resolve/main/craft.onnx",
+    "craft_onnx": "https://huggingface.co/zahir-mokrani/ocr_detect_text/resolve/main/craft_mlt_25k.onnx",
     "craft_openvino_xml": "https://huggingface.co/<user>/<repo>/resolve/main/craft.xml",
     "craft_openvino_bin": "https://huggingface.co/<user>/<repo>/resolve/main/craft.bin",
 }
