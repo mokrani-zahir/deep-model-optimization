@@ -42,4 +42,4 @@ Les tests avec traitement par lot (batch) seront effectués plus tard.
 
 Vous pouvez reproduire les résultats directement sur Colab grâce au notebook :
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1j0snnm5yODPL46u_R_xRiJvtBp5OCKWU?usp=sharing)
+[➡️ Open in Deepnote](https://deepnote.com/workspace/deep-model-optimization-154223c9-4a76-4983-91cd-281475179f1c/project/Zahir-MOKRANIs-Untitled-project-a68662c9-ece5-4640-8a37-7140181a55cd/notebook/Notebook-1-c0deb2558b2845918a8f2f75cb6f873d?utm_source=share-modal&utm_medium=product-shared-content&utm_campaign=notebook&utm_content=a68662c9-ece5-4640-8a37-7140181a55cd)
